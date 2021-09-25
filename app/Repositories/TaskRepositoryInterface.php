@@ -14,19 +14,19 @@ interface TaskRepositoryInterface
      */
     public function all();
 
-    /**
-     * Delete a task
-     */
-    public function delete($id);
-
+    
     /**
      * Update a task
      */
-    public function update($id, $data);
-
+    public function update($data, $id);
+    
+    /**
+     * Delete a task
+     */
+    public function destroy($id);
     /**
      * Search
      */
-    public function search($key, $value);
+    // public function search($key, $value);
 }
 
