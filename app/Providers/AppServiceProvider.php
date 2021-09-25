@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(TaskRepositoryInterface, TaskRepository);
+        $this->app->bind(TaskRepositoryInterface::class, TaskRepository::class);
     }
 
     /**
