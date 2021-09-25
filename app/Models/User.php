@@ -23,6 +23,10 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function tasks()
+    {
+        return $this->hasMany(Task::Class, 'user_id', 'task_id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
