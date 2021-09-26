@@ -21,7 +21,7 @@ class TaskController extends Controller
     public function all()
     {
         $task = $this->taskservice->all();
-        if($task['status'] === '404') {
+        if(count($task) <= 0) {
             return response()->json(['message' => 'no tasks found!'], 404);
         }
         return response()->json($task);
