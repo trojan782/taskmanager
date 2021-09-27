@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\UserInterface;
 use App\Repositories\TaskRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -17,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(TaskRepositoryInterface::class, TaskRepository::class);
-        $this->app->bind(TaskRepositoryInterface::class, UserRepository::Class);
+        $this->app->bind(UserInterface::class, UserRepository::Class);
     }
 
     /**
