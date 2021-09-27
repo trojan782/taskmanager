@@ -3,7 +3,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 
-class UserRepostory implements TaskRepositoryInterface
+class UserRepository implements UserInterface
 {
     protected $user;
     public function __construct(User $user)
