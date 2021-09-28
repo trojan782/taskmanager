@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\TaskService;
 use App\Services\UserService;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\TaskRequest;
+use Illuminate\Support\Facades\Auth;
+
 class TaskController extends Controller
 {
     protected $taskservice;
@@ -36,22 +38,18 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        $validator = $request->validate([
-            'userId' => 'required',
-            'title' => 'required|min:1|string',
-            'description' => 'string',
-            'category' => 'required|string',
-            'completed' => 'boolean|required'
-        ]);
 
+        $validator = $request->all();
+        
         if(!$validator) {
             return response([
                 'Message' => 'Request could not be completed',
                 'Error' => $validator->errors()
             ]);
         }
+
         $response = $this->taskservice->store([
             'userId' => Auth::id(),
             'title' => $request->get('title'),
@@ -59,8 +57,6 @@ class TaskController extends Controller
             'category' => $request->get('category'),
             'completed' => $request->get('completed')
         ]);
-
-
 
     //    $response = $this->taskservice->store($request->all());
 

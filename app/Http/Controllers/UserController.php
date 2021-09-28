@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -16,13 +17,9 @@ class UserController extends Controller
         $this->userservice = $userservice;
     }
 
-    public function register(Request $request)
+    public function register(UserRequest $request)
     {
-        $validator = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users,email',
-            'password' => 'required|string|min:4|confirmed'
-        ]);
+        $validator = $request->all();
 
         $user = $this->userservice->store($request->all());
 
@@ -39,12 +36,13 @@ class UserController extends Controller
         ], 500);
    }
 
-    public function login(Request $request)
+    public function login(UserRequest $request)
     {
-        $validator = $request->validate([
-            'email' => 'required|string|email|',
-            'password' => 'required|string|min:4'
-        ]);
+        // $validator = $request->validate([
+        //     'email' => 'required|string|email|',
+        //     'password' => 'required|string|min:4'
+        // ]);
+        $validator = $request->only(['email', 'password']);
 
         if (!Auth::attempt($validator)) {
             response()->json([
@@ -68,11 +66,9 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        $validator = $request->validate([
-            'name' => 'required|string|max:255'
-        ]);
+        $validator = $request->only(['name']);
 
         if(Auth::id() == $id)
         {
