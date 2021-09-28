@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\TaskService;
-
+use App\Services\UserService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 class TaskController extends Controller
 {
     protected $taskservice;
-
-    public function __construct(TaskService $taskservice)
+    protected $userservice;
+    public function __construct(TaskService $taskservice, UserService $userservice)
     {
         $this->taskservice = $taskservice;
+        $this->userservice = $userservice;
     }
     /**
      * Display a listing of the resource.
@@ -22,9 +25,9 @@ class TaskController extends Controller
     {
         $task = $this->taskservice->all();
         if(count($task) <= 0) {
-            return response()->json(['message' => 'no tasks found!'], 404);
+            return response(['message' => 'no tasks found!'], 404);
         }
-        return response()->json($task);
+        return response()->json([$task]);
     }
 
     /**
@@ -35,26 +38,39 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make([
+        $validator = $request->validate([
+            'userId' => 'required',
             'title' => 'required|min:1|string',
-            'description' => 'required|string',
+            'description' => 'string',
             'category' => 'required|string',
             'completed' => 'boolean|required'
         ]);
-        if($validator->fails()) {
-            return response()->json([
-                'Message' => 'Request cound not be completed',
+
+        if(!$validator) {
+            return response([
+                'Message' => 'Request could not be completed',
                 'Error' => $validator->errors()
             ]);
         }
-       $response = $this->taskservice->store($request->all());
+        $response = $this->taskservice->store([
+            'userId' => Auth::id(),
+            'title' => $request->get('title'),
+            'description' => $request->get('description'),
+            'category' => $request->get('category'),
+            'completed' => $request->get('completed')
+        ]);
+
+
+
+    //    $response = $this->taskservice->store($request->all());
+
        if(!$response) {
-           return response()->json([
+           return response([
                'Message' => 'Task not created!',
                'status' => 'error'
            ],500);
        }
-       return response()->json([
+       return response([
            'Message' => 'Task Created successfully!',
            'status' => 'success',
            'data' => $response
@@ -83,7 +99,11 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        return response()->json($this->taskservice->update($data, $id));
+        $response = $this->taskservice->update($data, $id);
+        return response([
+            'Message' => 'Task Updated!',
+            'data' => $response
+        ], 200);
     }
 
     /**
@@ -94,6 +114,13 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        return response()->json($this->taskservice->destroy($id));
+        $response = $this->taskservice->destroy($id);
+
+        if($response)
+        {
+            return response([
+                'Message' => 'Task Deleted successfully!'
+            ], 200);
+        }
     }
 }
