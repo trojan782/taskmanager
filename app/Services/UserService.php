@@ -3,7 +3,7 @@ namespace App\Services;
 
 use App\Repositories\UserRepository;
 
-class TaskService extends UserRepository
+class UserService extends UserRepository
 {
     protected $userservice;
 
