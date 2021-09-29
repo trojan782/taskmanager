@@ -48,7 +48,7 @@ php artisan serve
 
 ## Usage
 
-After starting your server Kindly visit the [localhost:port/docs/](localhost:port/docs/) to view the available endpoints.
+After starting your server Kindly visit  `localhost:port/docs/` to view the available endpoints.
 
 
 ## Conclusion
