@@ -18,7 +18,7 @@ class TaskRepository implements TaskRepositoryInterface
         return $task;
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         $task = $this->task::findOrFail($id);
         return $task;
@@ -30,14 +30,14 @@ class TaskRepository implements TaskRepositoryInterface
         return $tasks;
     }
 
-    public function update($data, $id)
+    public function update($data, int $id)
     {
         $task = $this->task::findOrFail($id);
         $task->update($data);
         return $task;
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $task = $this->task::findOrFail($id);
         return $task->destroy($id);

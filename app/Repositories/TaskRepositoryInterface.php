@@ -7,23 +7,23 @@ interface TaskRepositoryInterface
     /**
      * Get Task by ID
      */
-    public function show($id);
+    public function show(int $id);
 
     /**
      * Show All task
      */
     public function all();
 
-    
+
     /**
      * Update a task
      */
-    public function update($data, $id);
-    
+    public function update($data, int $id);
+
     /**
      * Delete a task
      */
-    public function destroy($id);
+    public function destroy(int $id);
     /**
      * Search
      */
