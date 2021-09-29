@@ -1,0 +1,379 @@
+name: Endpoints
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: api/user/register
+    metadata:
+      title: ''
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: koctjmdwzbajrtnsbnnmpggqqxcmhlqzcpetwntdfgttkcvsixubpbpgpsakcdhjqsgtjspjlhzyghlw
+        type: string
+      email:
+        name: email
+        description: 'Must be a valid email address.'
+        required: true
+        example: karianne74@example.org
+        type: string
+      password:
+        name: password
+        description: 'Must be at least 4 characters.'
+        required: true
+        example: ''
+        type: string
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/user/login
+    metadata:
+      title: ''
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: glcngkgsvpgpchraaxwtrsdqredpsczpbkzktfcfxcaocqvmiekogwtkeflzkupofgvchkkctpoxhkvsndnwzfbxeadumrstvnrjgudgorndfrsqxeutrmixpomknablqlhsakkwrzwnaneotiatsxwrahdeyynukxvktzphyfgvjhugmamiiirinx
+        type: string
+      email:
+        name: email
+        description: 'Must be a valid email address.'
+        required: true
+        example: eda02@example.com
+        type: string
+      password:
+        name: password
+        description: 'Must be at least 4 characters.'
+        required: true
+        example: tqw
+        type: string
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/taskmanager/users
+    metadata:
+      title: ''
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+  -
+    httpMethods:
+      - PUT
+    uri: 'api/taskmanager/user/update/{id}'
+    metadata:
+      title: ''
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the update.'
+        required: true
+        example: culpa
+        type: string
+    queryParameters: []
+    bodyParameters:
+      title:
+        name: title
+        description: 'Must be at least 1 characters.'
+        required: false
+        example: ''
+        type: string
+      description:
+        name: description
+        description: ''
+        required: false
+        example: omnis
+        type: string
+      category:
+        name: category
+        description: ''
+        required: false
+        example: ipsa
+        type: string
+      completed:
+        name: completed
+        description: ''
+        required: false
+        example: true
+        type: boolean
+      name:
+        name: name
+        description: 'Must be at least 4 characters.'
+        required: false
+        example: ar
+        type: string
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/taskmanager/user/profile
+    metadata:
+      title: ''
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/taskmanager/user/show/{id}'
+    metadata:
+      title: ''
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the show.'
+        required: true
+        example: illo
+        type: string
+    queryParameters: []
+    bodyParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/taskmanager/user/logout
+    metadata:
+      title: ''
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/taskmanager/tasks
+    metadata:
+      title: 'Display a listing of the resource.'
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/taskmanager/task/show/{id}'
+    metadata:
+      title: 'Display the specified resource.'
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the show.'
+        required: true
+        example: vel
+        type: string
+    queryParameters: []
+    bodyParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/taskmanager/task/create
+    metadata:
+      title: 'Store a newly created resource in storage.'
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      title:
+        name: title
+        description: 'Must be at least 1 characters.'
+        required: true
+        example: v
+        type: string
+      description:
+        name: description
+        description: ''
+        required: false
+        example: exercitationem
+        type: string
+      category:
+        name: category
+        description: ''
+        required: true
+        example: eum
+        type: string
+      completed:
+        name: completed
+        description: ''
+        required: true
+        example: false
+        type: boolean
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - PUT
+    uri: 'api/taskmanager/task/update/{id}'
+    metadata:
+      title: 'Update the specified resource in storage.'
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the update.'
+        required: true
+        example: exercitationem
+        type: string
+    queryParameters: []
+    bodyParameters:
+      title:
+        name: title
+        description: 'Must be at least 1 characters.'
+        required: true
+        example: ''
+        type: string
+      description:
+        name: description
+        description: ''
+        required: false
+        example: est
+        type: string
+      category:
+        name: category
+        description: ''
+        required: true
+        example: aliquid
+        type: string
+      completed:
+        name: completed
+        description: ''
+        required: true
+        example: false
+        type: boolean
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/taskmanager/task/delete/{id}'
+    metadata:
+      title: 'Remove the specified resource from storage.'
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the delete.'
+        required: true
+        example: ipsam
+        type: string
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
