@@ -16,22 +16,28 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+
+Route::prefix('user')->group(function () {
+    Route::post('/register', [UserController::Class, 'register']);
+    Route::post('/login', [UserController::Class, 'login']);
 });
-
-
-
-Route::post('/register', [UserController::Class, 'register']);
-Route::post('/login', [UserController::Class, 'login']);
 
 //protected routes
 Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'taskmanager'], function () {
 
-    Route::get('/profile' , [UserController::class, 'profile']);
+    Route::get('/users', [UserController::class, 'allUsers']);
+     Route::put('user/update/{id}', [UserController::class, 'update']);
+    Route::get('user/profile' , [UserController::class, 'profile']);
+    Route::get('user/show/{id}', [UserController::class, 'show']);
+    Route::post('/user/logout', [UserController::class, 'logout']);
     Route::get('/tasks', [TaskController::class, 'all']);
-    Route::post('/sign-out', [AuthenticationController::class, 'logout']);
-
+    Route::get('task/show/{id}', [TaskController::class, 'show']);
     Route::post('task/create', [TaskController::class, 'store']);
+    Route::put('task/update/{id}', [TaskController::class, 'update']);
+    Route::delete('task/delete/{id}', [TaskController::class, 'destroy']);
 });
 

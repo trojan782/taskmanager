@@ -7,6 +7,7 @@ use App\Services\TaskService;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\TaskRequest;
+use App\Http\Requests\UpdateRequest;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
@@ -42,7 +43,7 @@ class TaskController extends Controller
     {
 
         $validator = $request->all();
-        
+
         if(!$validator) {
             return response([
                 'Message' => 'Request could not be completed',
@@ -92,16 +93,25 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TaskRequest $request, $id)
     {
         $data = $request->all();
-        $response = $this->taskservice->update($data, $id);
-        return response([
+
+        //to get a particular task
+        $task = $this->taskservice->show($id);
+
+        //to check permission to update task
+        if($task['userId'] == Auth::id()) {
+            $response = $this->taskservice->update($data, $id);
+             return response([
             'Message' => 'Task Updated!',
             'data' => $response
         ], 200);
+        }
+        return response([
+            'Message' => 'Permission denied! Task does not belong to you!'
+        ]);
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -110,13 +120,20 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        $response = $this->taskservice->destroy($id);
+        $task = $this->taskservice->show($id);
 
-        if($response)
-        {
-            return response([
+        //to check permission to update task
+        if($task['userId'] == Auth::id()) {
+        $response = $this->taskservice->destroy($id);
+         return response([
+                'status' => 'success',
                 'Message' => 'Task Deleted successfully!'
             ], 200);
         }
+        return response([
+            'status' => 'failed!',
+            'Message' => 'Permission denied!, Not your Task!'
+        ]);
+
     }
 }

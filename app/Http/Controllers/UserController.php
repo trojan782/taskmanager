@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UpdateRequest;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -66,31 +67,27 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(UserRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        $validator = $request->only(['name']);
+        $data = $request->only('name');
 
-        if(Auth::id() == $id)
+        $user = $this->userservice->show($id);
+
+        if(Auth::id())
         {
-            $response = $this->userservice->update($validator, $id);
-
-            if(!response)
-            {
+            $response = $this->userservice->update($data, $id);
                 response()->json([
                     'Message' => 'update successful!',
                     'status' => 'success',
-                    'data' => $validator
+                    'data' => $data
                 ], 200);
-            }
+       }
             return response()->json([
                 'Message' => 'Update failed!',
                 'status' => 'error'
-            ]);
+            ], 500);
         }
-        return response()->json([
-            'Message' => 'Permission denied!'
-        ]);
-    }
+
 
     public function profile(Request $request)
     {
